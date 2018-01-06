@@ -1,0 +1,60 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:10.0
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: rsoproject
+  payments:
+    build: .
+    ports:
+      - 8087:8087
+    environment:
+      KUMULUZEE_DATASOURCES0_CONNECTIONURL: jdbc:postgresql://postgres:5432/rsoproject
+      KUMULUZEE_CONFIG_ETCD_HOSTS: http://etcd:2379
+      KUMULUZEE_DISCOVERY_ETCD_HOSTS: http://etcd:2379
+      KUMULUZEE_SERVER_BASEURL: http://payments:8087
+    depends_on:
+      - etcd
+      - users
+      - auth
+      - postgres
+  auth:
+    image: tomisebjanic/rso-auth:1.0.1
+    ports:
+      - 8083:8083
+    environment:
+      KUMULUZEE_CONFIG_ETCD_HOSTS: http://etcd:2379
+      KUMULUZEE_DISCOVERY_ETCD_HOSTS: http://etcd:2379
+      KUMULUZEE_SERVER_BASEURL: http://auth:8083
+  users:
+    image: tomisebjanic/rso-users:1.0.1
+    ports:
+      - 8082:8082
+    environment:
+      KUMULUZEE_DATASOURCES0_CONNECTIONURL: jdbc:postgresql://postgres:5432/rsoproject
+      KUMULUZEE_CONFIG_ETCD_HOSTS: http://etcd:2379
+      KUMULUZEE_DISCOVERY_ETCD_HOSTS: http://etcd:2379
+      KUMULUZEE_SERVER_BASEURL: http://users:8082
+    depends_on:
+      - postgres
+      - etcd
+  etcd:
+    image: elcolio/etcd:2.0.10
+    ports:
+      - 2379:2379
+      - 2380:2380
+      - 4001:4001
+      - 7001:7001
+  etcd-browser:
+    image: buddho/etcd-browser
+    ports:
+      - 8000:8000
+    environment:
+      ETCD_HOST: http://etcd
+      AUTH_PASS: doe
+    depends_on:
+      - etcd

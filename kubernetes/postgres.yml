@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-payments
+spec:
+  ports:
+  - name: pgql
+    port: 5432
+    targetPort: 54320
+    protocol: TCP
+  selector:
+    app: postgres-payments
+
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: postgres-payments
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres-payments
+    spec:
+      containers:
+        - name: postgres-payments
+          image: postgres:10.0
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_DB
+              value: rsopayments
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          ports:
+            - containerPort: 54320
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: pg-data
+      volumes:
+        - name: pg-data
+          emptyDir: {}

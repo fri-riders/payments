@@ -19,6 +19,8 @@ spec:
             value: http://etcd:2379
           - name: KUMULUZEE_CONFIG_ETCD_HOSTS
             value: http://etcd:2379
+          - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
+            value: jdbc:postgresql://postgres-payments:54320/rsopayments
           - name: KUMULUZEE_SERVER_BASEURL
             value: http://payments:8087
         livenessProbe:
