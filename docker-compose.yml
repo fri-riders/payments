@@ -31,7 +31,7 @@ services:
       KUMULUZEE_DISCOVERY_ETCD_HOSTS: http://etcd:2379
       KUMULUZEE_SERVER_BASEURL: http://auth:8083
   users:
-    image: tomisebjanic/rso-users:1.0.1
+    image: tomisebjanic/rso-users:1.0.2
     ports:
       - 8082:8082
     environment:
@@ -49,12 +49,4 @@ services:
       - 2380:2380
       - 4001:4001
       - 7001:7001
-  etcd-browser:
-    image: buddho/etcd-browser
-    ports:
-      - 8000:8000
-    environment:
-      ETCD_HOST: http://etcd
-      AUTH_PASS: doe
-    depends_on:
-      - etcd
+    entrypoint: ["/bin/run.sh", "-cors \"*\""]
