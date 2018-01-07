@@ -23,9 +23,9 @@ services:
       - auth
       - postgres
   auth:
-    image: tomisebjanic/rso-auth:1.0.1
+    image: tomisebjanic/rso-auth:1.0.2
     ports:
-      - 8083:8083
+      - 8089:8089
     environment:
       KUMULUZEE_CONFIG_ETCD_HOSTS: http://etcd:2379
       KUMULUZEE_DISCOVERY_ETCD_HOSTS: http://etcd:2379

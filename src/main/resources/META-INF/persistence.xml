@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.1">
-    <persistence-unit name="users-jpa" transaction-type="JTA">
+    <persistence-unit name="payments-jpa" transaction-type="JTA">
         <jta-data-source>jdbc/PaymentsDS</jta-data-source>
 
         <class>com.fri.rso.fririders.payments.entity.Payment</class>
