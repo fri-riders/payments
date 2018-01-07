@@ -10,7 +10,7 @@ spec:
         app: payments
     spec:
       containers:
-      - image: tomisebjanic/rso-payments:1.0
+      - image: tomisebjanic/rso-payments:1.0.4
         name: payments
         env:
           - name: KUMULUZEE_DISCOVERY_CLUSTER
@@ -20,7 +20,7 @@ spec:
           - name: KUMULUZEE_CONFIG_ETCD_HOSTS
             value: http://etcd:2379
           - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
-            value: jdbc:postgresql://postgres-payments:54320/rsopayments
+            value: jdbc:postgresql://postgres:5432/rsousers
           - name: KUMULUZEE_SERVER_BASEURL
             value: http://payments:8087
         livenessProbe:
