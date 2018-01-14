@@ -10,7 +10,7 @@ spec:
         app: payments
     spec:
       containers:
-      - image: tomisebjanic/rso-payments:1.0.4
+      - image: tomisebjanic/rso-payments:1.0.5
         name: payments
         env:
           - name: KUMULUZEE_DISCOVERY_CLUSTER
